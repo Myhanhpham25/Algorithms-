@@ -245,3 +245,4 @@ function shuffle(arr) {
 function removeRange(arr){
 	console.log("idk")
 }
+
