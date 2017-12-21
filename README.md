@@ -1,2 +1,2 @@
 # Algorithms Challenges-
-Problems based on Algorithms Challenges - The Dojo Collections 
+Some sample problems from the Algorithms Challenges Book - The Dojo Collections 
