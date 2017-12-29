@@ -214,8 +214,42 @@ function getKeyByValue(hash, value) {
     }
   }
 }
+//JAVASCRIPT STRING LIBRARY 
 
-getKeyByValue(someHash, '7');
+//STRING.CONCAT - adds string to an existing string.
+function stringConcat(str1, str2, str3){
+	var new_str = str1.concat(str2, str3)
+	console.log(new_str);
+}
 
+str1 = "Happy Birthday"
+str2 = "Kathy Pham. "
+str3 = "You're old AF "
+
+//STRING.SLICE(START,END)
+function stringSlice(str1){
+	var new_str = str1.slice(6, 15);
+	console.log(new_str)
+}
+
+//STRING.TRIM
+str4 = "\n Happy Birthday \t "
+function stringTrim(str4){
+	var new_str = str4.trim();
+	console.log(new_str)
+}
+
+//STRING.SPLIT
+function stringSplit(str1){
+	var new_str = str1.split(" ");
+	console.log(new_str);
+}
+
+//STRING.SEARCH 
+function stringSearch(str1){
+	var new_str = str1.search(val)
+	console.log(new_str);
+}
+val = "d";
 
 
