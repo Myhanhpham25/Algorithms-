@@ -16,26 +16,23 @@ function SinglyList() {
 }
  
 SinglyList.prototype.add = function(value) {
-    var node = new Node(value),
-        currentNode = this.head;
+    var node = new Node(value);
  
     // 1st use-case: an empty list
-    if (!currentNode) {
+    if(!this.head) {
         this.head = node;
         this._length++;
- 
         return node;
     }
- 
+    currentNode = this.head;
     // 2nd use-case: a non-empty list
     while (currentNode.next) {
         currentNode = currentNode.next;
     }
  
     currentNode.next = node;
- 
-    this._length++;
-     
+    this._length++; 
+    // console.log(node) 
     return node;
 };
  
@@ -43,103 +40,79 @@ SinglyList.prototype.searchNodeAt = function(position) {
     var currentNode = this.head,
         length = this._length,
         count = 1,
-        message = {failure: 'Failure: non-existent node in this list.'};
- 
+        message = {failure: 'Failure: non-existent node in this list.'}; 
     // 1st use-case: an invalid position
     if (length === 0 || position < 1 || position > length) {
         throw new Error(message.failure);
     }
- 
     // 2nd use-case: a valid position
     while (count < position) {
         currentNode = currentNode.next;
         count++;
     }
- 
     return currentNode;
 };
- 
-SinglyList.prototype.remove = function(position) {
-    var currentNode = this.head,
-        length = this._length,
-        count = 0,
-        message = {failure: 'Failure: non-existent node in this list.'},
-        beforeNodeToDelete = null,
-        nodeToDelete = null,
-        deletedNode = null;
- 
-    // 1st use-case: an invalid position
-    if (position < 0 || position > length) {
-        throw new Error(message.failure);
+
+SinglyList.prototype.removeFront = function(){
+    if(!this.head){
+        return undefined; 
     }
+    const value = this.head.value;
+    this.head = this.head.next;
+    return value; 
+
+}
  
-    // 2nd use-case: the first node is removed
-    if (position === 1) {
-        this.head = currentNode.next;
-        deletedNode = currentNode;
-        currentNode = null;
-        this._length--;
-         
-        return deletedNode;
+SinglyList.prototype.remove = function(value) {
+    if(this._length === 0){
+        return undefined; 
     }
- 
-    // 3rd use-case: any other node is removed
-    while (count < position) {
-        beforeNodeToDelete = currentNode;
-        nodeToDelete = currentNode.next;
-        count++;
+    if(!this.head){
+        this.removeFront();
+        return this; 
     }
- 
-    beforeNodeToDelete.next = nodeToDelete.next;
-    deletedNode = nodeToDelete;
-    nodeToDelete = null;
-    this._length--;
- 
-    return deletedNode;
+    let previousNode = this.head;
+    let thisNode = previousNode.next; 
+
+    while(this.node){
+        if(thisNode.value == value){
+            break;
+        }
+        previousNode = thisNode;
+        thisNode = thisNode.next; 
+    }
+
+    if(thisNode == null){
+        return undefined; 
+    }
+    
+    previousNode.next = thisNode.next; 
+    return this; 
 };
 
-function sll(){
-	this.head = null; 
+SinglyList.prototype.addFront = function(value){
+    var newNode = new Node(value);
+
+    if(!this.head){
+        this.head = newNode; 
+        this._length ++; 
+    }
+    newNode.next = this.head;
+    this.head = newNode; 
+    return this; 
 }
 
-sll.prototype.add=function(val){
-	var tempNode = new Node(val)
-	if(!this.head){
-		this.head = tempNode;
-	}else{
-		var curNode = this.head;
-		while(curNode.next != null){
-			curNode = curNode.next;
-		}
-		curNode.next = tempNode;
-	}
-}
 
-var mysll = new sll();
-console.log(mysll)
-mysll.add(1);
-console.log(mysll)
-mysll.add(3);
-console.log(mysll)
 
-//LIST: ADD FRONT 
-function addFront(value){
-	this.head = null; 
-	this.add = function(value){
-		var tempNode = new Node(value);
-		if(this.head == null){
-			this.head = tempNode;
-		}else{
-			var cur = this.head;
-			while(cur.next != null){
-				cur = cur.next;
-			}
-			cur.next = tempNode;
-		}
-	}
-	return this;
-}
 
-var t = addFront(3);
-console.log(t);
+var sll = new SinglyList(); 
+sll.add(1);
+sll.add(25);
+sll.add(35);
+sll.add(4);
+sll.searchNodeAt(2);
+var x = sll.remove(25);
+
+// console.log(sll);
+console.log(x);
 
