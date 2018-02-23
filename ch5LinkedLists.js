@@ -74,7 +74,7 @@ SinglyList.prototype.remove = function(value) {
     let previousNode = this.head;
     let thisNode = previousNode.next; 
 
-    while(this.node){
+    while(thisNode){
         if(thisNode.value == value){
             break;
         }
@@ -137,6 +137,7 @@ SinglyList.prototype.sListDisplay = function(){
         myList.push(currentNode.value);
         currentNode = currentNode.next;
     }
+    console.log(this._length)
     console.log(myList);
     console.log(myList.join(" "));
     return myList;
@@ -242,26 +243,239 @@ SinglyList.prototype.sListMoveMaxtoBack = function(){
     return this; 
 }
 
+SinglyList.prototype.prependVal = function(value, beforeValue){
+ 
+    var newnode = new Node(value);
+    let previousNode = this.head;
+    let thisnode = previousNode.next;
+
+    if(!this.head){
+        this.head = newnode;
+        return this;
+    }
+
+    if(previousNode.value == beforeValue){
+        newnode.next = this.head;
+        this.head = newnode; 
+        this._length++;
+        return this; 
+    } 
+
+    while(thisnode){
+        if(thisnode.value == beforeValue){
+            newnode.next = thisnode;
+            previousNode.next = newnode;
+            this._length++;
+            break;
+        }
+        previousNode = thisnode;
+        thisnode = thisnode.next;
+    }
+
+    if(thisnode === null){
+        this.add(value)
+    }
+
+    var list = this.sListDisplay();
+    // console.log(list);
+    return this; 
+}
+
+
+SinglyList.prototype.sListAppendVal = function(value, afterValue){
+    var newnode = new Node(value);
+    let previousNode = this.head;
+    let thisnode = previousNode.next;
+
+    if(!this.head){
+        this.head = newnode;
+    };
+
+    while(thisnode){
+        if(previousNode.value == afterValue){
+            newnode.next = thisnode;
+            previousNode.next = newnode;
+            this._length++;
+            break;
+        }
+        previousNode = thisnode;
+        thisnode = thisnode.next;
+    }
+
+    if(thisnode === null){
+        this.add(value);
+    }
+
+    var list = this.sListDisplay();
+    // console.log(list);
+    return this;
+};
+
+SinglyList.prototype.sListRemoveVal = function(value){
+    let previousnode = this.head;
+    let thisnode = previousnode.next;
+
+    if(!this.head){
+        return undefined; 
+    }
+
+    if(previousnode.value == value){
+        this.head = thisnode;
+        return this;
+    }
+
+    while(thisnode){
+        if(thisnode.value == value){
+            previousnode.next = thisnode.next;
+            break;
+        }
+        previousnode = thisnode;
+        thisnode = thisnode.next;
+    }
+
+    if(thisnode === null){
+        return undefined;
+    }
+
+    var list = this.sListDisplay();
+    // console.log(list);
+    return this;
+}
+
+SinglyList.prototype.sListRemoveNegatives = function(){
+
+    let previousnode = this.head;
+    let thisnode = previousnode.next;
+
+    if(!this.head){
+        return undefined; 
+    }
+
+    if(previousnode.value < 0){
+        this.head= thisnode;
+        thisnode = thisnode.next;
+    }
+
+    while(thisnode){
+
+        if(thisnode.value < 0){
+            previousnode.next = thisnode.next;
+        }
+        previousnode = thisnode;
+        thisnode = thisnode.next;
+    }
+
+    if(this.head.value < 0){
+        this.removeFront();
+    }
+
+    var list = this.sListDisplay();
+    console.log(list); 
+    return this;
+};
+
+SinglyList.prototype.kthFromEnd = function(sll, k){
+   var node = sll.head,
+       i = 1,
+       kthNode;
+   //handle, 0 or negative value of k
+   if(k<=0) return;
+
+    while(node){
+      if(i == k) kthNode = sll.head;
+      else if(i-k>0){
+       kthNode = kthNode.next;
+      }
+      i++;
+
+      node = node.next;
+    }
+   return kthNode;
+};
+
+SinglyList.prototype.deleteKthFromEnd = function(sll, k){
+    var node = sll.head,
+       i = 1,
+       kthNode,
+       previous;
+   if(k<=0) return sll;
+
+    while(node){
+      if(i == k) kthNode = sll.head;
+      else if(i-k>0){
+       previous = kthNode;
+       kthNode = kthNode.next;
+      }
+      i++;
+
+      node = node.next;
+    }
+    //kth node is the head
+    if(!previous)
+       sll.head = sll.head.next;
+    else{
+     previous.next = kthNode.next;
+   }
+   return sll; 
+};
+
+SinglyList.prototype.reversesll = function(sll){
+    if(!sll.head || !sll.head.next) return sll;
+
+  var nodes=[], 
+    current = sll.head;
+  //storing all the nodes in an array
+  while(current){
+    nodes.push(current);
+    current = current.next;
+  }
+    
+  var reversedLL = new LinkedList();
+  
+  reversedLL.head = nodes.pop();
+  current = reversedLL.head;
+  
+  var node = nodes.pop();  
+  //make sure to make next of the newly inserted node to be null
+  //other wise the last node of your SLL will retain its old next.
+  while(node){
+     node.next = null;
+     current.next = node;
+     
+     current = current.next;
+     node = nodes.pop();
+  }
+  return reversedLL;
+}
 
 
 var sll = new SinglyList(); 
-sll.add(4);
-sll.add("World")
-sll.add(3);
+sll.add(14);
+sll.add(-11);
+sll.add(-3);
 sll.add(2);
-sll.add(7);
-sll.add("Hello");
-sll.add("ending")
+sll.add(-7);
+// sll.add("Hello");
+// sll.add("ending")
 // sll.searchNodeAt(2);
+
+// var y = sll.sListDisplay();
+// console.log(y);
 // sll.remove(25);
 // sll.sListLength(1);
 // sll.contains();
-var x = sll.sListMoveMaxtoBack();
+// sll.prependVal(8, 2);
+// sll.sListAppendVal(10, 11);
+// sll.sListRemoveVal(2);
+var x = sll.sListRemoveNegatives();
+// sll.sListMoveMaxtoBack();
 // sll.sListAddBack(8)
 // sll.sListRemoveBack();
-// sll.sListDisplay();
+
 // var y = sll.sListAverage();
 // sll.sListMin();
 // sll.sListMax();
 console.log(x);
+
+// console.log(a);
 
