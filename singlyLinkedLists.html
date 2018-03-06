@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Week1</title>
+</head>
+<body>
+	<h2>Algorithms III</h2>
+	<h3>Singly Linked Lists </h3>
+	<p id="display"></p>
+
+<script>
+	function Node(value){
+		this.value = value,
+		this.next = null;
+	}
+
+	function singlyList(){
+		this.head = null,
+		this._length = 0;
+	}
+
+	singlyList.prototype.add = function(value){
+		var newNode = new Node(value);
+		if(!this.head){
+			this.head = newNode;
+			this._length++;
+			return newNode; 
+		}
+		currentNode = this.head;
+		while(currentNode.next){
+			currentNode = currentNode.next;
+		}
+		currentNode.next = newNode;
+		this._length++;
+		return currentNode; 
+	}
+
+	singlyList.prototype.addFront = function(value){
+		var newNode = new Node(value)
+		if(!this.head){
+			this.head = newNode;
+			this._length++
+			return newNode;
+		}
+		newNode.next = this.head;
+		this.head = newNode;
+		this._length++;
+		return newNode;  
+	}
+
+	singlyList.prototype.removeFront = function(){
+		if(!this.head){
+			return null; 
+		}
+		this.head = this.head.next; 
+		this._length--;
+		return this; 
+	}
+
+	singlyList.prototype.contains = function(value){
+		if(!this.head){
+			return null; 
+		}
+		var currentNode = this.head;
+		while(currentNode){
+			if(currentNode.value == value){
+				console.log(true);
+				return true;
+			}
+			currentNode = currentNode.next;
+		}
+		console.log(false);
+		return false; 
+	}
+
+	singlyList.prototype.front = function(){
+		if(!this.head){
+			return null; 
+		}else{
+			console.log(this.head.value);
+			return this.head.value;
+		}
+	}
+
+	singlyList.prototype.display = function(){
+		var array= [];
+		if(!this.head){
+			return null
+		}
+		currentNode = this.head;
+		while(currentNode){
+			array.push(currentNode.value);
+			currentNode = currentNode.next;
+			}
+		return array;
+	}
+
+
+	// ************** CALLING THE FUNCTIONS ***************
+
+	var sll = new singlyList;
+	sll.add(3);
+	sll.add(5);
+	sll.add(11);
+	sll.add(22);
+	sll.addFront(7);
+	sll.addFront(2);
+	sll.removeFront();
+	sll.contains(22);
+	sll.front();
+	console.log(sll);
+
+	document.getElementById("display").innerHTML = sll.display();
+
+</script>
+	
+</body>
+</html>
