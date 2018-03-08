@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Week1.2</title>
+</head>
+<body>
+	<h2>Algorithms III</h2>
+	<h3>Singly Linked Lists </h3>
+	<p id="display"></p>
+
+<script>
+
+// ******************ASSIGNMENT TWO 3.7.18 ********************
+
+	function Node(value){
+		this.value = value,
+		this.next = null;
+	}
+
+	function singlyList(){
+		this.head = null,
+		this._length = 0;
+	}
+
+	singlyList.prototype.add = function(value){
+		var newNode = new Node(value);
+		if(!this.head){
+			this.head = newNode;
+			this._length++;
+			return newNode; 
+		}
+		currentNode = this.head;
+		while(currentNode.next){
+			currentNode = currentNode.next;
+		}
+		currentNode.next = newNode;
+		this._length++;
+		return currentNode; 
+	}
+
+	singlyList.prototype.length = function(list){
+		console.log(this._length);
+		return this._length; 
+	}
+
+	singlyList.prototype.average = function(list){
+		if(!this.head){return undefined}
+		var sum = 0; 
+		currentNode = this.head; 
+		while(currentNode){
+			sum+= currentNode.value;
+			currentNode = currentNode.next;
+		}
+		var average = sum / this._length;
+		console.log(average)
+		console.log(sum);
+		return average; 
+	}
+
+	singlyList.prototype.min = function(list){
+		if(!this.head){return undefined}
+		var min = this.head.value; 
+		currentNode = this.head;
+		while(currentNode){
+			if(currentNode.value < min){
+				min = currentNode.value;
+			}else{
+				currentNode = currentNode.next;
+			}
+		}
+		console.log(min);
+		return min;
+	}
+
+	singlyList.prototype.max = function(list){
+		if(!this.head){return undefined}
+		var max = this.head.value; 
+		currentNode = this.head;
+		while(currentNode){
+			if(currentNode.value > max){
+				max = currentNode.value;
+			}else{
+				currentNode = currentNode.next;
+			}
+		}
+		console.log(max);
+		return max; 
+	}
+
+	singlyList.prototype.display = function(node){
+		if(!this.head){return undefined};
+		tempArr = [];
+		currentNode = this.head;
+		while(currentNode){
+			tempArr.push(currentNode.value);
+			currentNode = currentNode.next; 
+		}
+		console.log(tempArr);
+		var myList = tempArr.join(" ");
+		console.log(myList);
+		return myList;
+	}
+
+	singlyList.prototype.prependVal = function (list, value, BeforeVal){
+		var newNode = new Node(value);
+		var currentNode = this.head;
+		var checker = currentNode.next;
+
+		if(!this.head){
+			this.head = newNode;
+			this._length++;
+			return this;
+		}
+
+		if(currentNode.value === BeforeVal){
+			newNode.next = this.head;
+			this.head = newNode;
+			this._length++;
+			return newNode; 
+		}else{
+			while(checker){
+				if(checker.value === BeforeVal){
+					newNode.next = checker;
+					currentNode.next = newNode;
+					this._length++; 
+					break;
+				}
+				currentNode = checker;
+				checker = checker.next;
+			}
+		}
+		if(checker === null){
+			this.add(value);
+		}
+		return this;
+	}
+
+	singlyList.prototype.removeVal = function(list, value){
+		var currentNode = this.head;
+		var checker = currentNode.next;
+
+		if(!this.head){return undefined}
+		if(currentNode.value === value){
+			this.head = checker;
+			this._length--;
+			return this;
+		}
+		while(checker){
+			if(checker.value === value){
+				currentNode.next = checker.next;
+				this._length--;
+				break;
+			}
+			currentNode = checker;
+			checker = checker.next;		
+		}
+		if(checker === null){
+			return "value not found";
+		}
+		return this;
+	}
+
+	singlyList.prototype.appendVal = function(list, value, afterVal){
+		var newNode = new Node(value);
+		var currentNode = this.head;
+		var checker = currentNode.next;
+
+		if(!this.head){
+			this.head = newNode;
+			this._length++;
+			return this;
+		}
+
+		while(checker){
+			if(currentNode.value === afterVal){
+				newNode.next = checker; 
+				currentNode.next = newNode; 
+				this._length++;
+				break;
+			}
+			currentNode = checker;
+			checker = checker.next;
+		}
+		if(checker === null){
+			this.add(value);
+		}
+		return this;
+	}
+
+// **************** DISPLAY ON HTML FILE *************
+
+	singlyList.prototype.show = function(){
+		var array= [];
+		if(!this.head){
+			return null
+		}
+		currentNode = this.head;
+		while(currentNode){
+			array.push(currentNode.value);
+			currentNode = currentNode.next;
+			}
+		console.log(array);
+		return array;
+	}
+
+	// ************** CALLING THE FUNCTIONS ***************
+
+
+
+	var sll = new singlyList;
+	sll.add(3);
+	sll.add(5);
+	sll.add(11);
+	sll.add(22);
+	sll.add(7);
+	sll.add(1);
+	// sll.length();
+	// sll.average();
+	// sll.min();
+	// sll.max();
+	// sll.display();
+	// sll.prependVal(sll, 2,7);
+	// sll.removeVal(sll, 22);
+	// console.log(x);
+	sll.appendVal(sll, 13, 1);
+	console.log(sll);
+
+	document.getElementById("display").innerHTML = sll.show();
+
+</script>
+	
+</body>
+</html>
