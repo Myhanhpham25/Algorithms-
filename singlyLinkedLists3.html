@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Week1.3</title>
+</head>
+<body>
+	<h2>Algorithms III</h2>
+	<h3>Singly Linked Lists </h3>
+	<p id="display"></p>
+
+<script>
+
+// ******************ASSIGNMENT TWO 3.9.18 ********************
+
+	function Node(value, next){
+		this.value = value;
+		if(next){
+    		this.next = next;
+  		} else {
+    		this.next = null
+  		}		
+	}
+
+	function singlyList(){
+		this.head = null,
+		this._length = 0;
+	}
+
+	singlyList.prototype.add = function(value){
+		var newNode = new Node(value);
+		if(!this.head){
+			this.head = newNode;
+			this._length++;
+			return newNode; 
+		}
+		currentNode = this.head;
+		while(currentNode.next){
+			currentNode = currentNode.next;
+		}
+		currentNode.next = newNode;
+		this._length++;
+		return currentNode; 
+	}
+
+	singlyList.prototype.display = function(node){
+		if(!this.head){return undefined};
+		tempArr = [];
+		currentNode = this.head;
+		while(currentNode){
+			tempArr.push(currentNode.value);
+			currentNode = currentNode.next; 
+		}
+		console.log(tempArr);
+		var myList = tempArr.join(" ");
+		console.log(myList);
+		return myList;
+	}
+
+	singlyList.prototype.splitOnVal = function(list, num){
+		if(!this.head){return undefined}
+
+		var list1 = list;
+		var currentNode = this.head;
+		var checker = currentNode.next;
+
+		while(checker){
+			if(checker.value === num){		
+				var list2 = new singlyList();
+				list2.add(checker.value);
+				this._length--;
+				checker = checker.next;
+				currentNode.next = null;
+				while(checker){		
+					list2.add(checker.value);
+					this._length--;
+					checker = checker.next;					
+				}
+				break;
+			}
+			currentNode = checker;
+			checker = checker.next; 
+		}
+		// console.log(list2);
+		// console.log(list1);
+		return list2;
+	}
+
+	singlyList.prototype.partition = function(list, value){
+		if(!this.head){return undefined}
+		
+		var beforeVal = new singlyList();
+		var afterVal = new singlyList();
+		var middleVal = new singlyList();
+		var currentNode = this.head; 
+
+		while(currentNode){
+			if(currentNode.value < value){
+				beforeVal.add(currentNode.value);
+			}else if(currentNode.value === value){
+				middleVal.add(currentNode.value);
+			}else if(currentNode.value > value){
+				afterVal.add(currentNode.value);
+			}
+			currentNode = currentNode.next;
+		}
+		// console.log(beforeVal);
+		// console.log(afterVal);
+		// console.log(middleVal);
+
+		var newCurrentNode = beforeVal.head; 
+		while(newCurrentNode.next){
+			newCurrentNode = newCurrentNode.next;
+		}
+		newCurrentNode.next = middleVal.head;
+		//added another while loop incase there are duplicates. if there are no duplicates then we can take out the while loop and have the middleVal.next = afterVal.head. 
+
+		while(newCurrentNode.next){
+			newCurrentNode = newCurrentNode.next;
+		}
+		newCurrentNode.next = afterVal.head;
+		beforeVal._length += middleVal._length + afterVal._length;
+		// console.log(beforeVal);
+		return beforeVal;	
+	}
+
+	singlyList.prototype.deleteGivenNode = function(value){
+		var currentNode = this.head;
+
+		while(currentNode.next){
+			if(currentNode.value === value){
+				currentNode.removeSelf();
+				this._length--;
+				break;
+			}
+			currentNode = currentNode.next;
+		}
+		console.log(this);
+		return this;
+	}	
+
+	Node.prototype.removeSelf = function(){
+  		var temp = this.next;
+  		this.value = temp.value;
+  		this.next = temp.next;
+	}
+
+// **************** DISPLAY ON HTML FILE *************
+
+	singlyList.prototype.show = function(){
+		var array= [];
+		if(!this.head){
+			return null
+		}
+		currentNode = this.head;
+		while(currentNode){
+			array.push(currentNode.value);
+			currentNode = currentNode.next;
+			}
+		// console.log(array);
+		return array;
+	}
+
+	// ************** CALLING THE FUNCTIONS ***************
+
+
+
+	var sll = new singlyList;
+	sll.add(3);
+	sll.add(22);
+	sll.add(11);
+	sll.add(25);
+	sll.add(7);
+	sll.add(1);
+	// sll.add(7);
+	// sll.splitOnVal(sll, 22);
+	sll.partition(sll, 7);
+	sll.deleteGivenNode(25);
+	// var x = sll.head.next.next.next.removeSelf();
+	console.log(sll);
+
+	document.getElementById("display").innerHTML = sll.show();
+
+</script>
+	
+</body>
+</html>
