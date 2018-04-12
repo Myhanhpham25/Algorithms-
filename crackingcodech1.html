@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Arrays and Strings</title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<h1>Cracking the Coding Interview</h1>
+	<h2>Chapter 1 Arrays and Strings Questions</h2>
+
+	<table style="border-style: solid">
+		<thead>
+			<tr>
+				<th>Data Structures</th>
+				<th>Algorithms</th>
+				<th>Concepts</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Linked List</td>
+				<td>Breadth-First Search</td>
+				<td>Bit Manipulation</td>
+			</tr>
+			<tr>
+				<td>Trees, Tries, & Graphs</td>
+				<td>Depth-First Search</td>
+				<td>Memory (Stack vs. Heap)</td>
+			</tr>
+			<tr>
+				<td>Stacks & Queues</td>
+				<td>Binary Search</td>
+				<td>Recusion</td>
+			</tr>
+			<tr>
+				<td>Heaps</td>
+				<td>Merge Sort</td>
+				<td>Dynamic Programming</td>
+			</tr>
+			<tr>
+				<td>Vectors / ArrayList</td>
+				<td>Quick Sort</td>
+				<td>Big O Time & Space</td>
+			</tr>
+			<tr>
+				<td>Hash Tables</td>
+			</tr>
+		</tbody>
+	</table>
+
+	
+	<p>1.1 Is Unique: Implement an algorithm to determine if a string has all unique characters. What if you cannot use additonal data structures. </p>
+	<p><b>Method:</b> str.indexOf(serachValue, fromIndex)<br>
+	<b>Parameters:</b><br>
+	<b>searchValue:</b> A string representing the value to search for.<br>
+	<b>fromIndex:</b> An integer representing the index at which to start the search; the default value is 0. For fromIndex values lower than 0 or greater than str.length, the search starts at index 0 and str.length respectively.</p>
+
+	<p>Answer: <span id="problem1"></span></p>
+	<script>
+		function isUniqueChars(str){
+			// if string size is greater than 128 characters (total ASCII characters)
+			var len = str.length;
+			if(len > 127){ 
+				return false; 
+			}
+
+			for(var i = 0; i < len; i++){
+				var char = str[i];
+				//str.indexOf(searchValue, fromIndex(search starts))
+				if(str.indexOf(char, i + 1 ) > -1){ 
+					console.log(false);
+					return false; 
+				}
+			}
+			console.log(true);
+			return true; 
+		}	
+
+		var string = "HelloWorld";
+		isUniqueChars(string);
+
+		document.getElementById("problem1").innerHTML = isUniqueChars(string);
+	</script>
+
+	<p>1.2 Check Permutation( arrangement number or order : is a rearrangement of the elements of an ordered list) : Given two strings, write a method to decide if one is a permutation of the other.</p>
+	<p> Example:  the permutations of string ABC.<br>
+	ABC ACB BAC BCA CBA CAB</p>
+
+	<p>Steps:<br>
+		1.str.toLowerCase().split('').sort().join('').trim()<br>
+		2.compare the two strings if length equals, if not return false immedietly<br>
+		3.compare the characters and return results
+	</p>
+
+	<p>Answer: <span id="problem2"></span></p>
+	
+	<script>
+		function isPermutation(str1, str2){
+			var regStr1 = str1.toLowerCase().split('').sort().join('').trim();
+			var regStr2 = str2.toLowerCase().split('').sort().join('').trim();
+			console.log(regStr1);
+			console.log(regStr2);
+
+			if(regStr1.length != regStr2.length){
+				return false;
+			}
+
+			if(regStr1 === regStr2){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		var str1 = "Ac be";
+		var str2 = "cb ad";
+
+		isPermutation(str1, str2);
+		document.getElementById("problem2").innerHTML = isPermutation(str1, str2);
+	</script>
+
+
+
+
+</body>
+</html>
